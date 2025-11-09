@@ -1,12 +1,13 @@
+"""Example pipeline steps and usage demonstrating PipeCo capabilities."""
 import logging
 from examples.models import ExampleCSVModel, ExampleDictModel, ExampleConfigModel, Nothing
 
-######## Let's set up some steps
 from pipeco import Step, register
 import csv
 
 @register("CSV path to dict")
 class CSVPathToDict(Step[ExampleCSVModel, ExampleDictModel, ExampleConfigModel]):
+    """Reads a CSV file and converts it to a dictionary structure."""
     input_model = ExampleCSVModel
     output_model = ExampleDictModel
     config_model = ExampleConfigModel
@@ -24,6 +25,7 @@ class CSVPathToDict(Step[ExampleCSVModel, ExampleDictModel, ExampleConfigModel])
 
 @register("Change favorite food")
 class ChangeFavoriteFood(Step[ExampleDictModel, ExampleDictModel, Nothing]):
+    """Transforms favorite food entries by replacing 'a' with 'o'."""
     input_model = ExampleDictModel
     output_model = ExampleDictModel
     config_model = Nothing
@@ -45,11 +47,13 @@ class ChangeFavoriteFood(Step[ExampleDictModel, ExampleDictModel, Nothing]):
         return ExampleDictModel(structured_dict={"rows": rows})
 
 class SaveToPathConfig(ExampleConfigModel):
+    """Configuration for saving CSV files with path and overwrite options."""
     save_path: str
     overwrite: bool = False
     
 @register("Save dict to CSV")
 class SaveDictToCSV(Step[ExampleDictModel, Nothing, SaveToPathConfig]):
+    """Writes dictionary data back to a CSV file."""
     input_model = ExampleDictModel
     output_model = Nothing
     config_model = SaveToPathConfig

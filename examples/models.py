@@ -1,16 +1,19 @@
+"""Example Pydantic models for PipeCo pipeline demonstrations."""
 from pydantic import BaseModel
 
-## Example PipeCo Models
 class ExampleCSVModel(BaseModel):
+    """Input model containing path to a CSV file."""
     csv_path: str
     
 class ExampleDictModel(BaseModel):
+    """Model containing structured data as a dictionary."""
     structured_dict: dict
 
 class ExampleConfigModel(BaseModel):
+    """Configuration for CSV parsing options."""
     delimiter: str = ","
     header: bool = True
     
-## Nones
 class Nothing(BaseModel):
+    """Empty model for steps with no meaningful output."""
     pass

@@ -1,8 +1,11 @@
+"""Pipeline orchestration for composing type-safe steps."""
 from pydantic import BaseModel
 from pipeco.contracts import Step, Context
 
 class Pipeline:
+    """Chains steps together with compile-time type checking."""
     def __init__(self, steps: list[Step]) -> None:
+        """Create pipeline and verify type compatibility between steps."""
         if not steps:
             raise ValueError("Pipeline needs at least one step")
         # Type-compatibility check at build time
@@ -15,6 +18,7 @@ class Pipeline:
         self.steps = steps
 
     def run(self, data: BaseModel, ctx: Context | None = None) -> BaseModel:
+        """Execute pipeline steps sequentially with validation at each step."""
         ctx = ctx or Context()
         x = data
         for step in self.steps:
