@@ -15,5 +15,5 @@ class ExampleConfigModel(BaseModel):
     header: bool = True
     
 class Nothing(BaseModel):
-    """Empty model for steps with no meaningful output."""
+    """Empty model."""
     pass
