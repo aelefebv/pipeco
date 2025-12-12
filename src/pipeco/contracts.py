@@ -61,6 +61,11 @@ class Step(Generic[I, O, C], abc.ABC):
         except ValidationError as e:
             raise TypeError(f"{self.name}: output validation failed") from e
         
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, type(self)):
+            return False
+        return self.config == other.config
+
 class Nothing(BaseModel):
     """Empty model."""
     pass

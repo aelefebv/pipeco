@@ -24,3 +24,8 @@ class Pipeline:
         for step in self.steps:
             x = step(x, ctx)  # each step re-validates I and O
         return x
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, type(self)):
+            return False
+        return self.steps == other.steps
